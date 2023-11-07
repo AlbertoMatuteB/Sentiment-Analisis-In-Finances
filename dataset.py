@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 import json
 import os
-import datetime
+from datetime import datetime, timedelta
 
 def get_sentiment(api_key, stock, time_from, time_to):
     """get sentiment analysis of news for a given stock"""
@@ -213,13 +213,6 @@ def get_monthly_time_series(api_key, stock, time_from, time_to):
 # retrieve data for dates between 2023-01-01 and 2023-06-01
 # create a csv file for each stock and each time series function
 
-# create a list of stocks
-stocks = ['AAPL', 
-          #'NVDA', 
-          #'JNJ', 
-          #'XOM', 
-          #'JPM'
-          ]
 
 '''aapl_daily = get_daily_time_series('APIKE', 'AAPL', '2023-01-01', '2023-06-01')
 aapl_daily.to_csv('aapl_daily.csv', index=False)
@@ -273,20 +266,58 @@ jpm_monthly = get_monthly_time_series('APIKE', 'JPM', '2023-01-01', '2023-06-01'
 jpm_monthly.to_csv('jpm_monthly.csv', index=False)
 '''
 
-'''aapl_sentiment = get_sentiment('APIKE', 'AAPL', '2023-01-01', '2023-06-01')
-aapl_sentiment.to_csv('aapl_sentiment.csv', index=False)
-'''
+"""start_date = '2023-02-01'
+end_date = '2023-04-30'
 
-'''nvda_sentiment = get_sentiment('APIKE', 'NVDA', '2023-01-01', '2023-06-01')
-nvda_sentiment.to_csv('nvda_sentiment.csv', index=False)'''
+aapl_sentiment = get_sentiment('APIKE', 'AAPL', start_date, end_date)
+aapl_sentiment.to_csv('aapl_sentiment_2.csv', index=False)
 
-'''jnj_sentiment = get_sentiment('APIKE', 'JNJ', '2023-01-01', '2023-06-01')
-jnj_sentiment.to_csv('jnj_sentiment.csv', index=False)'''
 
-xom_sentiment = get_sentiment('APIKE', 'XOM', '2023-01-01', '2023-06-01')
-xom_sentiment.to_csv('xom_sentiment.csv', index=False)
+nvda_sentiment = get_sentiment('APIKE', 'NVDA', start_date, end_date)
+nvda_sentiment.to_csv('nvda_sentiment_2.csv', index=False)
 
-jpm_sentiment = get_sentiment('APIKE', 'JPM', '2023-01-01', '2023-06-01')
-jpm_sentiment.to_csv('jpm_sentiment.csv', index=False)
+jnj_sentiment = get_sentiment('APIKE', 'JNJ', start_date, end_date)
+jnj_sentiment.to_csv('jnj_sentiment_2.csv', index=False)
 
-    
+xom_sentiment = get_sentiment('APIKE', 'XOM', start_date, end_date)
+xom_sentiment.to_csv('xom_sentiment_2.csv', index=False)
+
+jpm_sentiment = get_sentiment('APIKE', 'JPM', start_date, end_date)
+jpm_sentiment.to_csv('jpm_sentiment_2.csv', index=False)"""
+
+
+# create a list of stocks
+stocks = [#'AAPL', 
+          #'NVDA', 
+          #'JNJ', 
+          #'XOM', 
+          #'JPM'
+          ]
+
+def generate_monthly_dates(start_date, end_date):
+    """Generate a list of month start and end dates for a given date range."""
+    start = datetime.strptime(start_date, "%Y-%m-%d")
+    end = datetime.strptime(end_date, "%Y-%m-%d")
+    dates = []
+
+    while start < end:
+        # Find the last day of the current month
+        month_end = (start.replace(day=28) + timedelta(days=4)).replace(day=1) - timedelta(days=1)
+        if month_end > end:
+            month_end = end
+        dates.append((start.strftime("%Y-%m-%d"), month_end.strftime("%Y-%m-%d")))
+        start = month_end + timedelta(days=1)
+
+    return dates
+
+# for each stock, retrieve monthly sentiment data and store them in one big csv file for each stock
+for stock in stocks:
+    monthly_dates = generate_monthly_dates('2022-06-01', '2023-10-01')
+    monthly_sentiment = pd.DataFrame()
+    for date in monthly_dates:
+        start_date = date[0]
+        end_date = date[1]
+        sentiment = get_sentiment('APIKE', stock, start_date, end_date)
+        monthly_sentiment = monthly_sentiment.append(sentiment)
+    monthly_sentiment.to_csv(f'{stock}_monthly_sentiment2.csv', index=False)
+
