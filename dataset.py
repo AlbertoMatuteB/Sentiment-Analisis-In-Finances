@@ -214,19 +214,19 @@ def get_monthly_time_series(api_key, stock, time_from, time_to):
 # create a csv file for each stock and each time series function
 
 
-'''aapl_daily = get_daily_time_series('APIKE', 'AAPL', '2023-01-01', '2023-06-01')
-aapl_daily.to_csv('aapl_daily.csv', index=False)
-
+aapl_daily = get_daily_time_series('APIKE', 'AAPL', '2023-01-01', '2023-06-01')
+aapl_daily.to_csv('aapl_daily_validation.csv', index=False)
+'''
 aapl_weekly = get_weekly_time_series('APIKE', 'AAPL', '2023-01-01', '2023-06-01')
 aapl_weekly.to_csv('aapl_weekly.csv', index=False)
 
 aapl_monthly = get_monthly_time_series('APIKE', 'AAPL', '2023-01-01', '2023-06-01')
 aapl_monthly.to_csv('aapl_monthly.csv', index=False)
 '''
-'''
-nvda_daily = get_daily_time_series('APIKE', 'NVDA', '2023-01-01', '2023-06-01')
-nvda_daily.to_csv('nvda_daily.csv', index=False)
 
+nvda_daily = get_daily_time_series('APIKE', 'NVDA', '2023-01-01', '2023-06-01')
+nvda_daily.to_csv('nvda_daily_validation.csv', index=False)
+'''
 nvda_weekly = get_weekly_time_series('APIKE', 'NVDA', '2023-01-01', '2023-06-01')
 nvda_weekly.to_csv('nvda_weekly.csv', index=False)
 
@@ -234,10 +234,10 @@ nvda_monthly = get_monthly_time_series('APIKE', 'NVDA', '2023-01-01', '2023-06-0
 nvda_monthly.to_csv('nvda_monthly.csv', index=False)
 '''
 
-'''
-jnj_daily = get_daily_time_series('APIKE', 'JNJ', '2023-01-01', '2023-06-01')
-jnj_daily.to_csv('jnj_daily.csv', index=False)
 
+jnj_daily = get_daily_time_series('APIKE', 'JNJ', '2023-01-01', '2023-06-01')
+jnj_daily.to_csv('jnj_daily_validation.csv', index=False)
+'''
 jnj_weekly = get_weekly_time_series('APIKE', 'JNJ', '2023-01-01', '2023-06-01')
 jnj_weekly.to_csv('jnj_weekly.csv', index=False)
 
@@ -245,9 +245,9 @@ jnj_monthly = get_monthly_time_series('APIKE', 'JNJ', '2023-01-01', '2023-06-01'
 jnj_monthly.to_csv('jnj_monthly.csv', index=False)
 '''
 
-'''xom_daily = get_daily_time_series('APIKE', 'XOM', '2023-01-01', '2023-06-01')
-xom_daily.to_csv('xom_daily.csv', index=False)
-
+xom_daily = get_daily_time_series('APIKE', 'XOM', '2023-01-01', '2023-06-01')
+xom_daily.to_csv('xom_daily_validation.csv', index=False)
+'''
 xom_weekly = get_weekly_time_series('APIKE', 'XOM', '2023-01-01', '2023-06-01')
 xom_weekly.to_csv('xom_weekly.csv', index=False)
 
@@ -256,9 +256,10 @@ xom_monthly.to_csv('xom_monthly.csv', index=False)
 '''
 
 
-'''jpm_daily = get_daily_time_series('APIKE', 'JPM', '2023-01-01', '2023-06-01')
-jpm_daily.to_csv('jpm_daily.csv', index=False)
+jpm_daily = get_daily_time_series('APIKE', 'JPM', '2023-01-01', '2023-06-01')
+jpm_daily.to_csv('jpm_daily_validation.csv', index=False)
 
+'''
 jpm_weekly = get_weekly_time_series('APIKE', 'JPM', '2023-01-01', '2023-06-01')
 jpm_weekly.to_csv('jpm_weekly.csv', index=False)
 
@@ -287,11 +288,11 @@ jpm_sentiment.to_csv('jpm_sentiment_2.csv', index=False)"""
 
 
 # create a list of stocks
-stocks = [#'AAPL', 
-          #'NVDA', 
-          #'JNJ', 
-          #'XOM', 
-          #'JPM'
+stocks = ['AAPL', 
+          'NVDA', 
+          'JNJ', 
+          'XOM', 
+          'JPM'
           ]
 
 def generate_monthly_dates(start_date, end_date):
@@ -310,14 +311,14 @@ def generate_monthly_dates(start_date, end_date):
 
     return dates
 
-# for each stock, retrieve monthly sentiment data and store them in one big csv file for each stock
+'''# for each stock, retrieve monthly sentiment data and store them in one big csv file for each stock
 for stock in stocks:
-    monthly_dates = generate_monthly_dates('2022-06-01', '2023-10-01')
+    monthly_dates = generate_monthly_dates('2023-10-01', '2023-11-08')
     monthly_sentiment = pd.DataFrame()
     for date in monthly_dates:
         start_date = date[0]
         end_date = date[1]
         sentiment = get_sentiment('APIKE', stock, start_date, end_date)
         monthly_sentiment = monthly_sentiment.append(sentiment)
-    monthly_sentiment.to_csv(f'{stock}_monthly_sentiment2.csv', index=False)
-
+    monthly_sentiment.to_csv(f'{stock}_monthly_sentiment_validation.csv', index=False)
+'''
